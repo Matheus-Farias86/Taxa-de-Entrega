@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Previsão de Taxa de Entrega</title>
+    <style>
+        body {
+            background: #f0f2f5;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            margin-top: 25px;
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+
+        h2 {
+            margin-top: 30px;
+            color: #222;
+            background: #d4edda;
+            padding: 15px 25px;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Prever Taxa de Entrega</h1>
+    <form method="POST" action="/estimate">
+        <label>Distância (km):</label>
+        <input type="number" name="distancia" step="0.01" max="20" required placeholder="Ex: 5.5">
+
+        <label>Horário do Pedido:</label>
+        <input type="time" name="horario" required placeholder="Ex: 18:30">
+
+        <label>Valor do Pedido (R$):</label>
+        <input type="number" name="valor_pedido" step="0.01" required placeholder="Ex: 79.90">
+
+        <label>Nº de Pedidos Simultâneos:</label>
+        <input type="number" name="pedidos_simultaneos" step="1" min="1" required placeholder="Ex: 3">
+
+        <label>Severidade do Clima (0 a 10):</label>
+        <input type="number" name="clima" min="0" max="10" required placeholder="Ex: 4">
+
+        <label>Severidade do Congestionamento (0 a 10):</label>
+        <input type="number" name="congestionamento" min="0" max="10" required placeholder="Ex: 7">
+
+        <button type="submit">Prever</button>
+    </form>
+
+    {% if error %}
+    <h2 style="background:#f8d7da; border:1px solid #f5c6cb; color:#721c24;">
+        {{ error }}
+    </h2>
+    {% elif result %}
+    <h2>Taxa estimada: R$ {{ result }}</h2>
+    {% endif %}
+
+</body>
+
+</html>
